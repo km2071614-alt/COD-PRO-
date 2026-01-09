@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>COD PRO Mobile | Final Edition</title>
+    <title>COD PRO Mobile | Complete Edition</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,36 +22,34 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--text-main); overflow-x: hidden; padding-bottom: 85px; transition: 0.3s; }
 
-        /* --- واجهة التسجيل الزجاجية --- */
+        /* --- واجهة التسجيل الزجاجية المتطورة --- */
         #auth-page {
             position: fixed; inset: 0; background: linear-gradient(135deg, #1a237e, #000);
             display: flex; align-items: center; justify-content: center; z-index: 5000; padding: 20px;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 35px; padding: 40px 25px;
-            width: 100%; max-width: 380px; text-align: center; color: white;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 35px; padding: 35px 25px;
+            width: 100%; max-width: 380px; text-align: center; color: white; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         /* --- الهيدر واللوجو --- */
         .header-app { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
         .logo-mobile { display: flex; align-items: center; font-weight: 900; color: var(--primary); font-size: 20px; }
-        .logo-icon { width: 35px; height: 35px; background: linear-gradient(45deg, var(--accent), #ff9100); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; margin-left: 10px; font-family: monospace; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .logo-icon { width: 35px; height: 35px; background: linear-gradient(45deg, var(--accent), #ff9100); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; margin-left: 10px; font-family: monospace; }
 
         /* --- المربعات الطائرة --- */
         .sq-anim { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
         .sq-anim span { position: absolute; background: rgba(255,255,255,0.1); animation: sq-fly 15s linear infinite; bottom: -50px; }
-        @keyframes sq-fly { from { transform: translateY(0) rotate(0); opacity: 0.5; } to { transform: translateY(-500px) rotate(360deg); opacity: 0; } }
+        @keyframes sq-fly { from { transform: translateY(0) rotate(0); opacity: 0.5; } to { transform: translateY(-600px) rotate(360deg); opacity: 0; } }
 
         /* --- القائمة السفلية --- */
         .bottom-nav {
             position: fixed; bottom: 0; width: 100%; height: 75px; background: var(--white);
             display: flex; justify-content: space-around; align-items: center;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: env(safe-area-inset-bottom);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000;
         }
         .nav-tab { color: var(--text-sub); display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 700; }
-        .nav-tab i { font-size: 22px; margin-bottom: 4px; }
         .nav-tab.active { color: var(--primary); }
         .nav-tab.active i { color: var(--accent); }
 
@@ -60,47 +58,54 @@
         .page.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: var(--white); border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); }
+        .card { background: var(--white); border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--border); }
         .welcome-card { background: var(--primary); color: white; position: relative; overflow: hidden; border: none; }
 
-        /* --- المنتدى --- */
-        .forum-msg { background: var(--white); border-radius: 15px; padding: 12px; margin-bottom: 10px; border-right: 4px solid var(--accent); }
-
         /* --- أزرار ومدخلات --- */
-        .btn-accent { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 15px; font-weight: 900; box-shadow: 0 10px 20px rgba(255,109,0,0.2); }
-        .input-glass { width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 15px; color: white; margin-bottom: 15px; text-align: center; }
+        .btn-accent { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; }
+        .input-glass { width: 100%; padding: 15px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 15px; color: white; margin-bottom: 12px; text-align: center; }
+        .input-glass::placeholder { color: rgba(255,255,255,0.7); }
 
         /* --- مشغل الفيديو وتفعيل الكود --- */
         .full-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 4000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        video { width: 100%; border-radius: 10px; }
     </style>
 </head>
 <body onload="checkLogin();">
 
     <div id="auth-page">
-        <div class="glass-card">
+        <div id="login-box" class="glass-card">
             <div class="logo-icon" style="margin: 0 auto 20px; width: 60px; height: 60px; font-size: 30px;">&lt;/&gt;</div>
-            <h2 style="margin-bottom: 30px;">COD PRO</h2>
+            <h2 style="margin-bottom: 5px;">مرحباً بك مجدداً</h2>
+            <p style="font-size: 13px; opacity: 0.7; margin-bottom: 25px;">سجل دخولك لمتابعة دروسك</p>
             <input type="email" id="login-email" class="input-glass" placeholder="البريد الإلكتروني">
-            <button class="btn-accent" onclick="doLogin()">دخول المنصة</button>
-            <p style="margin-top: 20px; font-size: 11px; opacity: 0.5;">Engineer Karem Mohamed</p>
+            <button class="btn-accent" onclick="doLogin()">دخول</button>
+            <p style="margin-top: 20px; font-size: 13px;">ليس لديك حساب؟ <span onclick="switchAuth('signup')" style="color:var(--accent); font-weight:bold; cursor:pointer;">إنشاء حساب</span></p>
+        </div>
+
+        <div id="signup-box" class="glass-card" style="display: none;">
+            <h2 style="margin-bottom: 5px;">حساب جديد</h2>
+            <p style="font-size: 13px; opacity: 0.7; margin-bottom: 25px;">انضم إلى مجتمع COD PRO</p>
+            <input type="text" id="reg-name" class="input-glass" placeholder="الاسم الكامل">
+            <input type="email" id="reg-email" class="input-glass" placeholder="البريد الإلكتروني">
+            <button class="btn-accent" onclick="doSignup()">تسجيل حساب جديد</button>
+            <p style="margin-top: 20px; font-size: 13px;">لديك حساب بالفعل؟ <span onclick="switchAuth('login')" style="color:var(--accent); font-weight:bold; cursor:pointer;">تسجيل دخول</span></p>
         </div>
     </div>
 
     <div id="app-content" style="display: none;">
         <header class="header-app">
             <div class="logo-mobile"><div class="logo-icon">&lt;/&gt;</div>COD<span>PRO</span></div>
-            <i class="fas fa-adjust" onclick="toggleTheme()" style="font-size: 20px;"></i>
+            <i class="fas fa-moon" onclick="toggleTheme()" id="theme-icon"></i>
         </header>
 
         <div id="home" class="page active">
             <div class="card welcome-card">
                 <div class="sq-anim">
                     <span style="left:10%; width:30px; height:30px;"></span>
-                    <span style="left:70%; width:20px; height:20px; animation-delay: 3s;"></span>
+                    <span style="left:80%; width:20px; height:20px; animation-delay: 2s;"></span>
                 </div>
-                <h2 id="user-welcome" style="position:relative;">مرحباً</h2>
-                <p style="position:relative; opacity: 0.8;">جاهز لتعلم كود جديد؟</p>
+                <h2 id="user-welcome">مرحباً</h2>
+                <p style="opacity: 0.8;">استعد لرحلة برمجية ممتعة اليوم.</p>
             </div>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -108,21 +113,21 @@
                 <div class="card" style="text-align: center;"><small>الإنجاز</small><h2 id="st-prog" style="color:var(--accent)">0%</h2></div>
             </div>
 
-            <div style="text-align:center; margin-top:50px; opacity:0.04; pointer-events:none;">
+            <div style="text-align:center; margin-top:50px; opacity:0.04;">
                 <i class="fas fa-code" style="font-size: 80px;"></i>
                 <h1 style="letter-spacing: 10px;">COD PRO</h1>
             </div>
         </div>
 
         <div id="lessons" class="page">
-            <h3 style="margin-bottom: 15px;"><i class="fas fa-play-circle"></i> المسار التعليمي</h3>
+            <h3 style="margin-bottom: 15px;">المسار التعليمي</h3>
             <div id="lesson-list"></div>
         </div>
 
         <div id="forum" class="page">
-            <h3 style="margin-bottom: 15px;"><i class="fas fa-comments"></i> المنتدى</h3>
+            <h3 style="margin-bottom: 15px;">مجتمع المبرمجين</h3>
             <div class="card" style="padding: 10px;">
-                <textarea id="post-text" placeholder="اكتب سؤالك هنا..." style="width:100%; border:none; background:var(--bg); padding:10px; border-radius:10px; height:80px; resize:none;"></textarea>
+                <textarea id="post-text" placeholder="بماذا تفكر؟" style="width:100%; border:none; background:var(--bg); padding:10px; border-radius:10px; height:60px; resize:none;"></textarea>
                 <button class="btn-accent" style="margin-top:10px; padding:10px;" onclick="addPost()">نشر</button>
             </div>
             <div id="forum-posts"></div>
@@ -133,14 +138,14 @@
                 <div style="width:70px; height:70px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; margin: 0 auto 15px; font-size:30px;"><i class="fas fa-user"></i></div>
                 <h3 id="p-name">--</h3>
                 <p id="p-email" style="color:var(--text-sub); margin-bottom: 30px;"></p>
-                <button onclick="logout()" style="background:none; border:none; color:red; font-weight:bold;">تسجيل الخروج</button>
+                <button onclick="logout()" style="color:red; background:none; border:none; font-weight:bold;">تسجيل الخروج</button>
             </div>
         </div>
 
         <nav class="bottom-nav">
             <div class="nav-tab active" onclick="showTab(this, 'home')"><i class="fas fa-home"></i><span>الرئيسية</span></div>
-            <div class="nav-tab" onclick="showTab(this, 'lessons')"><i class="fas fa-video"></i><span>الدروس</span></div>
-            <div class="nav-tab" onclick="showTab(this, 'forum')"><i class="fas fa-users"></i><span>المنتدى</span></div>
+            <div class="nav-tab" onclick="showTab(this, 'lessons')"><i class="fas fa-play-circle"></i><span>الدروس</span></div>
+            <div class="nav-tab" onclick="showTab(this, 'forum')"><i class="fas fa-comments"></i><span>المنتدى</span></div>
             <div class="nav-tab" onclick="showTab(this, 'profile')"><i class="fas fa-user"></i><span>حسابي</span></div>
         </nav>
     </div>
@@ -148,18 +153,16 @@
     <div id="video-overlay" class="full-overlay">
         <div id="pay-section" style="display:none; text-align:center; color:white;">
             <i class="fas fa-lock" style="font-size: 50px; color: var(--accent); margin-bottom: 20px;"></i>
-            <h3>المحتوى مقفل</h3>
-            <p style="margin: 15px 0; opacity: 0.8;">تواصل مع م. كريم للحصول على كود التفعيل</p>
-            <a href="https://wa.me/201021461421" style="color:#25D366; text-decoration:none; font-weight:900;"><i class="fab fa-whatsapp"></i> واتساب:01558179388</a>
-            <input type="text" id="act-code" class="input-glass" placeholder="أدخل كود التفعيل" style="margin-top:20px; background:rgba(255,255,255,0.2);">
-            <button class="btn-accent" onclick="checkLessonCode()">تفعيل الآن</button>
-            <p onclick="closeVid()" style="margin-top:20px; opacity:0.5;">إغلاق</p>
+            <h3>محتوى مدفوع</h3>
+            <p style="margin: 15px 0;">تواصل مع م. كريم للحصول على كود التفعيل</p>
+            <a href="https://wa.me/201021461421" style="color:#25D366; text-decoration:none; font-weight:900;">01021461421</a>
+            <input type="text" id="act-code" class="input-glass" placeholder="أدخل كود التفعيل" style="margin-top:20px;">
+            <button class="btn-accent" onclick="checkLessonCode()">تفعيل</button>
+            <p onclick="closeVid()" style="margin-top:20px; opacity:0.5;">رجوع</p>
         </div>
-        
         <div id="video-section" style="display:none; width:100%;">
             <div style="display:flex; justify-content:space-between; color:white; margin-bottom:10px;">
-                <strong id="v-title">الدرس</strong>
-                <i class="fas fa-times" onclick="closeVid()"></i>
+                <strong id="v-title">الدرس</strong><i class="fas fa-times" onclick="closeVid()"></i>
             </div>
             <video id="player" controls playsinline controlsList="nodownload"></video>
         </div>
@@ -168,8 +171,13 @@
     <script>
         let currentUser = null;
         let pendingLesson = null;
-        let completed = JSON.parse(localStorage.getItem('comp_mob_v12') || '[]');
-        let unlocked = JSON.parse(localStorage.getItem('unlk_mob_v12') || '[]');
+        let completed = JSON.parse(localStorage.getItem('comp_mob_v13') || '[]');
+        let unlocked = JSON.parse(localStorage.getItem('unlk_mob_v13') || '[]');
+
+        function switchAuth(type) {
+            document.getElementById('login-box').style.display = type === 'login' ? 'block' : 'none';
+            document.getElementById('signup-box').style.display = type === 'signup' ? 'block' : 'none';
+        }
 
         function checkLogin() {
             const user = localStorage.getItem('activeUser');
@@ -186,10 +194,22 @@
 
         function doLogin() {
             const email = document.getElementById('login-email').value;
-            const users = JSON.parse(localStorage.getItem('codpro_users') || '[{"name":"كريم","email":"admin@cod.com"}]');
+            const users = JSON.parse(localStorage.getItem('codpro_users') || '[]');
             const user = users.find(u => u.email === email);
             if(user) { localStorage.setItem('activeUser', JSON.stringify(user)); checkLogin(); }
-            else alert("البريد غير مسجل");
+            else alert("البريد غير مسجل، يرجى إنشاء حساب");
+        }
+
+        function doSignup() {
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            if(!name || !email) return alert("يرجى ملء كافة البيانات");
+            let users = JSON.parse(localStorage.getItem('codpro_users') || '[]');
+            if(users.find(u => u.email === email)) return alert("البريد مسجل مسبقاً");
+            users.push({name, email});
+            localStorage.setItem('codpro_users', JSON.stringify(users));
+            alert("تم إنشاء الحساب بنجاح! يمكنك الدخول الآن.");
+            switchAuth('login');
         }
 
         function renderLessons() {
@@ -200,7 +220,6 @@
                     <div style="width:40px; height:40px; background:var(--bg); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--primary);"><i class="fas fa-play"></i></div>
                     <div style="flex:1"><strong>${l.title}</strong></div>
                     ${l.type === 'paid' && !unlocked.includes(l.id.toString()) ? '<i class="fas fa-lock" style="color:var(--accent)"></i>' : ''}
-                    ${completed.includes(l.id.toString()) ? '<i class="fas fa-check-circle" style="color:#10b981"></i>' : ''}
                 </div>
             `).join('');
         }
@@ -210,21 +229,17 @@
             const lesson = lessons.find(l => l.id.toString() === id.toString());
             pendingLesson = lesson;
             document.getElementById('video-overlay').style.display = 'flex';
-            
             if (lesson.type === 'paid' && !unlocked.includes(id.toString())) {
                 document.getElementById('pay-section').style.display = 'block';
                 document.getElementById('video-section').style.display = 'none';
-            } else {
-                startVid();
-            }
+            } else { startVid(); }
         }
 
         function checkLessonCode() {
             if(document.getElementById('act-code').value === pendingLesson.code) {
                 unlocked.push(pendingLesson.id.toString());
-                localStorage.setItem('unlk_mob_v12', JSON.stringify(unlocked));
-                alert("تم التفعيل!");
-                startVid();
+                localStorage.setItem('unlk_mob_v13', JSON.stringify(unlocked));
+                alert("تم التفعيل!"); startVid();
             } else alert("كود خاطئ!");
         }
 
@@ -237,7 +252,7 @@
             p.play();
             if(!completed.includes(pendingLesson.id.toString())) {
                 completed.push(pendingLesson.id.toString());
-                localStorage.setItem('comp_mob_v12', JSON.stringify(completed));
+                localStorage.setItem('comp_mob_v13', JSON.stringify(completed));
                 updateStats(); renderLessons();
             }
         }
@@ -257,7 +272,7 @@
         function renderPosts() {
             const posts = JSON.parse(localStorage.getItem('app_posts') || '[]');
             document.getElementById('forum-posts').innerHTML = posts.map(p => `
-                <div class="forum-msg"><strong>${p.name}</strong><p style="font-size:14px; opacity:0.8;">${p.text}</p></div>
+                <div class="card" style="margin-bottom:10px; padding:12px;"><strong>${p.name}</strong><p style="font-size:14px; opacity:0.8;">${p.text}</p></div>
             `).join('');
         }
 
@@ -278,6 +293,7 @@
         function toggleTheme() {
             const isDark = document.body.getAttribute('data-theme') === 'dark';
             document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            document.getElementById('theme-icon').className = isDark ? 'fas fa-moon' : 'fas fa-sun';
         }
         function logout() { localStorage.removeItem('activeUser'); location.reload(); }
     </script>

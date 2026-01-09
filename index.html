@@ -3,71 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>COD PRO Mobile | Complete Edition</title>
-    
+    <title>COD PRO | Private Admin Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        :root {
-            --primary: #1a237e; --accent: #ff6d00; --bg: #f0f2f5; --white: #ffffff;
-            --text-main: #1e293b; --text-sub: #64748b; --glass: rgba(255, 255, 255, 0.1);
-        }
-
-        [data-theme="dark"] {
-            --primary: #818cf8; --accent: #fbbf24; --bg: #020617; --white: #1e293b;
-            --text-main: #f1f5f9; --text-sub: #94a3b8; --glass: rgba(255, 255, 255, 0.05);
-        }
-
+        :root { --primary: #1a237e; --accent: #ff6d00; --bg: #f0f2f5; --white: #ffffff; --text-main: #1e293b; --text-sub: #64748b; }
+        [data-theme="dark"] { --primary: #818cf8; --accent: #fbbf24; --bg: #020617; --white: #1e293b; --text-main: #f1f5f9; --text-sub: #94a3b8; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--text-main); overflow-x: hidden; padding-bottom: 85px; transition: 0.3s; }
 
-        /* --- واجهة التسجيل الزجاجية المتطورة --- */
-        #auth-page {
-            position: fixed; inset: 0; background: linear-gradient(135deg, #1a237e, #000);
-            display: flex; align-items: center; justify-content: center; z-index: 5000; padding: 20px;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 35px; padding: 35px 25px;
-            width: 100%; max-width: 380px; text-align: center; color: white; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        /* --- الهيدر واللوجو --- */
+        /* شاشة الدخول الزجاجية */
+        #auth-page { position: fixed; inset: 0; background: linear-gradient(135deg, #1a237e, #000); display: flex; align-items: center; justify-content: center; z-index: 5000; padding: 20px; }
+        .glass-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 35px; padding: 35px 25px; width: 100%; max-width: 380px; text-align: center; color: white; }
+        
         .header-app { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
-        .logo-mobile { display: flex; align-items: center; font-weight: 900; color: var(--primary); font-size: 20px; }
         .logo-icon { width: 35px; height: 35px; background: linear-gradient(45deg, var(--accent), #ff9100); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; margin-left: 10px; font-family: monospace; }
 
-        /* --- المربعات الطائرة --- */
-        .sq-anim { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-        .sq-anim span { position: absolute; background: rgba(255,255,255,0.1); animation: sq-fly 15s linear infinite; bottom: -50px; }
-        @keyframes sq-fly { from { transform: translateY(0) rotate(0); opacity: 0.5; } to { transform: translateY(-600px) rotate(360deg); opacity: 0; } }
-
-        /* --- القائمة السفلية --- */
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; height: 75px; background: var(--white);
-            display: flex; justify-content: space-around; align-items: center;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000;
-        }
-        .nav-tab { color: var(--text-sub); display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 700; }
-        .nav-tab.active { color: var(--primary); }
-        .nav-tab.active i { color: var(--accent); }
-
-        /* --- الصفحات --- */
         .page { display: none; padding: 15px 5%; animation: slideUp 0.4s ease; }
         .page.active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: var(--white); border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.05); position: relative; }
+        .welcome-card { background: var(--primary); color: white; overflow: hidden; }
 
-        .card { background: var(--white); border-radius: 25px; padding: 20px; margin-bottom: 15px; border: 1px solid var(--border); }
-        .welcome-card { background: var(--primary); color: white; position: relative; overflow: hidden; border: none; }
+        /* المربعات الطائرة */
+        .sq { position: absolute; background: rgba(255,255,255,0.1); animation: fly 10s infinite linear; bottom: -50px; }
+        @keyframes fly { from { transform: translateY(0) rotate(0); } to { transform: translateY(-500px) rotate(360deg); } }
 
-        /* --- أزرار ومدخلات --- */
-        .btn-accent { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 75px; background: var(--white); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; }
+        .nav-tab { color: var(--text-sub); display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .nav-tab.active { color: var(--primary); }
+        .nav-tab.admin-only { display: none; color: #ef4444; } /* مخفي افتراضياً */
+
+        .btn-accent { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; }
+        .input-st { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 10px; background: var(--bg); color: var(--text-main); }
         .input-glass { width: 100%; padding: 15px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 15px; color: white; margin-bottom: 12px; text-align: center; }
-        .input-glass::placeholder { color: rgba(255,255,255,0.7); }
 
-        /* --- مشغل الفيديو وتفعيل الكود --- */
         .full-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 4000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        video { width: 100%; border-radius: 15px; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body onload="checkLogin();">
@@ -75,15 +47,219 @@
     <div id="auth-page">
         <div id="login-box" class="glass-card">
             <div class="logo-icon" style="margin: 0 auto 20px; width: 60px; height: 60px; font-size: 30px;">&lt;/&gt;</div>
-            <h2 style="margin-bottom: 5px;">مرحباً بك مجدداً</h2>
-            <p style="font-size: 13px; opacity: 0.7; margin-bottom: 25px;">سجل دخولك لمتابعة دروسك</p>
-            <input type="email" id="login-email" class="input-glass" placeholder="البريد الإلكتروني">
-            <button class="btn-accent" onclick="doLogin()">دخول</button>
-            <p style="margin-top: 20px; font-size: 13px;">ليس لديك حساب؟ <span onclick="switchAuth('signup')" style="color:var(--accent); font-weight:bold; cursor:pointer;">إنشاء حساب</span></p>
+            <h2>تسجيل الدخول</h2>
+            <p style="font-size: 13px; opacity: 0.7; margin-bottom: 25px;">ادخل بياناتك للمتابعة</p>
+            <input type="text" id="log-name" class="input-glass" placeholder="الاسم">
+            <input type="email" id="log-email" class="input-glass" placeholder="البريد الإلكتروني">
+            <button class="btn-accent" onclick="handleLogin()">دخول</button>
+            <p style="margin-top: 15px; font-size: 12px; opacity: 0.5;">Engineer Karem Mohamed</p>
+        </div>
+    </div>
+
+    <div id="app-content" style="display: none;">
+        <header class="header-app">
+            <div style="display:flex; align-items:center; font-weight:900; color:var(--primary);"><div class="logo-icon">&lt;/&gt;</div>COD PRO</div>
+            <i class="fas fa-moon" onclick="toggleTheme()"></i>
+        </header>
+
+        <div id="home" class="page active">
+            <div class="card welcome-card">
+                <div class="sq" style="left:10%; width:30px; height:30px;"></div>
+                <div class="sq" style="left:80%; width:20px; height:20px; animation-delay:2s;"></div>
+                <h2 id="user-welcome">أهلاً بك</h2>
+                <p>جاهز لتعلم شيء جديد اليوم؟</p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="card" style="text-align: center;"><small>الدروس</small><h2 id="st-done" style="color:var(--accent)">0</h2></div>
+                <div class="card" style="text-align: center;"><small>الإنجاز</small><h2 id="st-prog" style="color:var(--accent)">0%</h2></div>
+            </div>
         </div>
 
-        <div id="signup-box" class="glass-card" style="display: none;">
-            <h2 style="margin-bottom: 5px;">حساب جديد</h2>
+        <div id="lessons" class="page">
+            <h3>المسار التعليمي</h3>
+            <div id="lesson-list" style="margin-top:15px;"></div>
+        </div>
+
+        <div id="admin-panel" class="page">
+            <h3 style="color:#ef4444; margin-bottom:15px;"><i class="fas fa-user-shield"></i> لوحة تحكم المدير</h3>
+            <div class="card">
+                <input type="text" id="adm-title" class="input-st" placeholder="عنوان الدرس">
+                <input type="text" id="adm-url" class="input-st" placeholder="رابط الفيديو (Direct Link)">
+                <select id="adm-type" class="input-st">
+                    <option value="free">مجاني</option>
+                    <option value="paid">مدفوع (بكود)</option>
+                </select>
+                <input type="text" id="adm-code" class="input-st" placeholder="كود التفعيل (للمدفوع فقط)">
+                <button class="btn-accent" onclick="addNewLesson()">إضافة الدرس فوراً</button>
+            </div>
+            <div id="admin-lessons-list"></div>
+        </div>
+
+        <div id="profile" class="page">
+            <div class="card" style="text-align: center;">
+                <div style="width:60px; height:60px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; margin: 0 auto 15px; font-size:25px;"><i class="fas fa-user"></i></div>
+                <h3 id="p-name">--</h3>
+                <p id="p-email" style="margin-bottom: 20px; opacity:0.6"></p>
+                <div id="admin-btn-profile" style="display:none; margin-bottom:10px;">
+                    <button onclick="showTab(null, 'admin-panel')" style="background:#ef4444; color:white; border:none; padding:10px; border-radius:10px; width:100%;">فتح لوحة الإدارة</button>
+                </div>
+                <button onclick="logout()" style="color:red; background:none; border:none; font-weight:bold;">خروج</button>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <div class="nav-tab active" onclick="showTab(this, 'home')"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-tab" onclick="showTab(this, 'lessons')"><i class="fas fa-play"></i><span>الدروس</span></div>
+            <div id="admin-tab" class="nav-tab admin-only" onclick="showTab(this, 'admin-panel')"><i class="fas fa-tools"></i><span>الإدارة</span></div>
+            <div class="nav-tab" onclick="showTab(this, 'profile')"><i class="fas fa-user"></i><span>حسابي</span></div>
+        </nav>
+    </div>
+
+    <div id="video-overlay" class="full-overlay">
+        <div id="pay-section" style="display:none; text-align:center; color:white;">
+            <i class="fas fa-lock" style="font-size: 50px; color: var(--accent); margin-bottom: 20px;"></i>
+            <h3>محتوى مقفل</h3>
+            <input type="text" id="act-code" class="input-glass" placeholder="أدخل كود التفعيل">
+            <button class="btn-accent" onclick="verifyCode()">تفعيل</button>
+            <p onclick="closeVid()" style="margin-top:20px; opacity:0.5;">إغلاق</p>
+        </div>
+        <div id="video-section" style="display:none; width:100%;">
+            <div style="display:flex; justify-content:space-between; color:white; margin-bottom:10px;">
+                <strong id="v-title">الدرس</strong><i class="fas fa-times" onclick="closeVid()"></i>
+            </div>
+            <video id="player" controls playsinline></video>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let pendingLesson = null;
+        const ADMIN_KEY = "ppooos"; // الرمز السري بتاعك
+
+        function handleLogin() {
+            const name = document.getElementById('log-name').value;
+            const email = document.getElementById('log-email').value;
+
+            if(!name || !email) return alert("اكتب بياناتك");
+
+            const user = { name, email, isAdmin: (name === ADMIN_KEY && email === ADMIN_KEY) };
+            localStorage.setItem('activeUser', JSON.stringify(user));
+            checkLogin();
+        }
+
+        function checkLogin() {
+            const user = localStorage.getItem('activeUser');
+            if(user) {
+                currentUser = JSON.parse(user);
+                document.getElementById('auth-page').style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+                document.getElementById('user-welcome').innerText = `أهلاً، ${currentUser.name}`;
+                document.getElementById('p-name').innerText = currentUser.name;
+                document.getElementById('p-email').innerText = currentUser.email;
+
+                if(currentUser.isAdmin) {
+                    document.getElementById('admin-tab').style.display = 'flex';
+                    document.getElementById('admin-btn-profile').style.display = 'block';
+                }
+                renderLessons();
+            }
+        }
+
+        function renderLessons() {
+            const lessons = JSON.parse(localStorage.getItem('codpro_database') || '[]');
+            const list = document.getElementById('lesson-list');
+            const admList = document.getElementById('admin-lessons-list');
+
+            list.innerHTML = lessons.map(l => `
+                <div class="card" onclick="openLesson('${l.id}')">
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <i class="fas fa-play-circle" style="font-size:30px; color:var(--primary)"></i>
+                        <div style="flex:1"><strong>${l.title}</strong></div>
+                        ${l.type === 'paid' ? '<i class="fas fa-lock" style="color:var(--accent)"></i>' : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            if(currentUser.isAdmin) {
+                admList.innerHTML = lessons.map(l => `
+                    <div class="card" style="border-right:5px solid red;">
+                        <strong>${l.title}</strong>
+                        <button onclick="deleteLesson('${l.id}')" style="float:left; color:red; border:none; background:none;">حذف</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function addNewLesson() {
+            const title = document.getElementById('adm-title').value;
+            const url = document.getElementById('adm-url').value;
+            const type = document.getElementById('adm-type').value;
+            const code = document.getElementById('adm-code').value;
+
+            if(!title || !url) return alert("اكمل البيانات");
+
+            let lessons = JSON.parse(localStorage.getItem('codpro_database') || '[]');
+            lessons.push({ id: Date.now().toString(), title, url, type, code });
+            localStorage.setItem('codpro_database', JSON.stringify(lessons));
+            
+            alert("تم إضافة الدرس بنجاح!");
+            renderLessons();
+        }
+
+        function deleteLesson(id) {
+            let lessons = JSON.parse(localStorage.getItem('codpro_database') || '[]');
+            lessons = lessons.filter(l => l.id !== id);
+            localStorage.setItem('codpro_database', JSON.stringify(lessons));
+            renderLessons();
+        }
+
+        function openLesson(id) {
+            const lessons = JSON.parse(localStorage.getItem('codpro_database') || '[]');
+            const lesson = lessons.find(l => l.id === id);
+            pendingLesson = lesson;
+            
+            document.getElementById('video-overlay').style.display = 'flex';
+            if(lesson.type === 'paid') {
+                document.getElementById('pay-section').style.display = 'block';
+                document.getElementById('video-section').style.display = 'none';
+            } else {
+                startVid();
+            }
+        }
+
+        function verifyCode() {
+            if(document.getElementById('act-code').value === pendingLesson.code) {
+                startVid();
+            } else alert("كود خاطئ");
+        }
+
+        function startVid() {
+            document.getElementById('pay-section').style.display = 'none';
+            document.getElementById('video-section').style.display = 'block';
+            const p = document.getElementById('player');
+            p.src = pendingLesson.url;
+            document.getElementById('v-title').innerText = pendingLesson.title;
+            p.play();
+        }
+
+        function closeVid() { document.getElementById('player').pause(); document.getElementById('video-overlay').style.display = 'none'; }
+
+        function showTab(btn, id) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        }
+
+        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
+    </script>
+</body>
+</html>
             <p style="font-size: 13px; opacity: 0.7; margin-bottom: 25px;">انضم إلى مجتمع COD PRO</p>
             <input type="text" id="reg-name" class="input-glass" placeholder="الاسم الكامل">
             <input type="email" id="reg-email" class="input-glass" placeholder="البريد الإلكتروني">

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>COD PRO Mobile | Final Edition</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1a237e; --accent: #ff6d00; --bg: #f0f2f5; --white: #ffffff;
+            --text-main: #1e293b; --text-sub: #64748b; --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #818cf8; --accent: #fbbf24; --bg: #020617; --white: #1e293b;
+            --text-main: #f1f5f9; --text-sub: #94a3b8; --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--text-main); overflow-x: hidden; padding-bottom: 85px; transition: 0.3s; }
+
+        /* --- واجهة التسجيل الزجاجية --- */
+        #auth-page {
+            position: fixed; inset: 0; background: linear-gradient(135deg, #1a237e, #000);
+            display: flex; align-items: center; justify-content: center; z-index: 5000; padding: 20px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 35px; padding: 40px 25px;
+            width: 100%; max-width: 380px; text-align: center; color: white;
+        }
+
+        /* --- الهيدر واللوجو --- */
+        .header-app { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
+        .logo-mobile { display: flex; align-items: center; font-weight: 900; color: var(--primary); font-size: 20px; }
+        .logo-icon { width: 35px; height: 35px; background: linear-gradient(45deg, var(--accent), #ff9100); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; margin-left: 10px; font-family: monospace; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        /* --- المربعات الطائرة --- */
+        .sq-anim { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+        .sq-anim span { position: absolute; background: rgba(255,255,255,0.1); animation: sq-fly 15s linear infinite; bottom: -50px; }
+        @keyframes sq-fly { from { transform: translateY(0) rotate(0); opacity: 0.5; } to { transform: translateY(-500px) rotate(360deg); opacity: 0; } }
+
+        /* --- القائمة السفلية --- */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; height: 75px; background: var(--white);
+            display: flex; justify-content: space-around; align-items: center;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05); z-index: 1000; padding-bottom: env(safe-area-inset-bottom);
+        }
+        .nav-tab { color: var(--text-sub); display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 700; }
+        .nav-tab i { font-size: 22px; margin-bottom: 4px; }
+        .nav-tab.active { color: var(--primary); }
+        .nav-tab.active i { color: var(--accent); }
+
+        /* --- الصفحات --- */
+        .page { display: none; padding: 15px 5%; animation: slideUp 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--white); border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid var(--border); }
+        .welcome-card { background: var(--primary); color: white; position: relative; overflow: hidden; border: none; }
+
+        /* --- المنتدى --- */
+        .forum-msg { background: var(--white); border-radius: 15px; padding: 12px; margin-bottom: 10px; border-right: 4px solid var(--accent); }
+
+        /* --- أزرار ومدخلات --- */
+        .btn-accent { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 15px; font-weight: 900; box-shadow: 0 10px 20px rgba(255,109,0,0.2); }
+        .input-glass { width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 15px; color: white; margin-bottom: 15px; text-align: center; }
+
+        /* --- مشغل الفيديو وتفعيل الكود --- */
+        .full-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 4000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        video { width: 100%; border-radius: 10px; }
+    </style>
+</head>
+<body onload="checkLogin();">
+
+    <div id="auth-page">
+        <div class="glass-card">
+            <div class="logo-icon" style="margin: 0 auto 20px; width: 60px; height: 60px; font-size: 30px;">&lt;/&gt;</div>
+            <h2 style="margin-bottom: 30px;">COD PRO</h2>
+            <input type="email" id="login-email" class="input-glass" placeholder="البريد الإلكتروني">
+            <button class="btn-accent" onclick="doLogin()">دخول المنصة</button>
+            <p style="margin-top: 20px; font-size: 11px; opacity: 0.5;">Engineer Karem Mohamed</p>
+        </div>
+    </div>
+
+    <div id="app-content" style="display: none;">
+        <header class="header-app">
+            <div class="logo-mobile"><div class="logo-icon">&lt;/&gt;</div>COD<span>PRO</span></div>
+            <i class="fas fa-adjust" onclick="toggleTheme()" style="font-size: 20px;"></i>
+        </header>
+
+        <div id="home" class="page active">
+            <div class="card welcome-card">
+                <div class="sq-anim">
+                    <span style="left:10%; width:30px; height:30px;"></span>
+                    <span style="left:70%; width:20px; height:20px; animation-delay: 3s;"></span>
+                </div>
+                <h2 id="user-welcome" style="position:relative;">مرحباً</h2>
+                <p style="position:relative; opacity: 0.8;">جاهز لتعلم كود جديد؟</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="card" style="text-align: center;"><small>الدروس</small><h2 id="st-done" style="color:var(--accent)">0</h2></div>
+                <div class="card" style="text-align: center;"><small>الإنجاز</small><h2 id="st-prog" style="color:var(--accent)">0%</h2></div>
+            </div>
+
+            <div style="text-align:center; margin-top:50px; opacity:0.04; pointer-events:none;">
+                <i class="fas fa-code" style="font-size: 80px;"></i>
+                <h1 style="letter-spacing: 10px;">COD PRO</h1>
+            </div>
+        </div>
+
+        <div id="lessons" class="page">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-play-circle"></i> المسار التعليمي</h3>
+            <div id="lesson-list"></div>
+        </div>
+
+        <div id="forum" class="page">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-comments"></i> المنتدى</h3>
+            <div class="card" style="padding: 10px;">
+                <textarea id="post-text" placeholder="اكتب سؤالك هنا..." style="width:100%; border:none; background:var(--bg); padding:10px; border-radius:10px; height:80px; resize:none;"></textarea>
+                <button class="btn-accent" style="margin-top:10px; padding:10px;" onclick="addPost()">نشر</button>
+            </div>
+            <div id="forum-posts"></div>
+        </div>
+
+        <div id="profile" class="page">
+            <div class="card" style="text-align: center; padding: 40px 20px;">
+                <div style="width:70px; height:70px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; margin: 0 auto 15px; font-size:30px;"><i class="fas fa-user"></i></div>
+                <h3 id="p-name">--</h3>
+                <p id="p-email" style="color:var(--text-sub); margin-bottom: 30px;"></p>
+                <button onclick="logout()" style="background:none; border:none; color:red; font-weight:bold;">تسجيل الخروج</button>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <div class="nav-tab active" onclick="showTab(this, 'home')"><i class="fas fa-home"></i><span>الرئيسية</span></div>
+            <div class="nav-tab" onclick="showTab(this, 'lessons')"><i class="fas fa-video"></i><span>الدروس</span></div>
+            <div class="nav-tab" onclick="showTab(this, 'forum')"><i class="fas fa-users"></i><span>المنتدى</span></div>
+            <div class="nav-tab" onclick="showTab(this, 'profile')"><i class="fas fa-user"></i><span>حسابي</span></div>
+        </nav>
+    </div>
+
+    <div id="video-overlay" class="full-overlay">
+        <div id="pay-section" style="display:none; text-align:center; color:white;">
+            <i class="fas fa-lock" style="font-size: 50px; color: var(--accent); margin-bottom: 20px;"></i>
+            <h3>المحتوى مقفل</h3>
+            <p style="margin: 15px 0; opacity: 0.8;">تواصل مع م. كريم للحصول على كود التفعيل</p>
+            <a href="https://wa.me/201021461421" style="color:#25D366; text-decoration:none; font-weight:900;"><i class="fab fa-whatsapp"></i> واتساب:01558179388</a>
+            <input type="text" id="act-code" class="input-glass" placeholder="أدخل كود التفعيل" style="margin-top:20px; background:rgba(255,255,255,0.2);">
+            <button class="btn-accent" onclick="checkLessonCode()">تفعيل الآن</button>
+            <p onclick="closeVid()" style="margin-top:20px; opacity:0.5;">إغلاق</p>
+        </div>
+        
+        <div id="video-section" style="display:none; width:100%;">
+            <div style="display:flex; justify-content:space-between; color:white; margin-bottom:10px;">
+                <strong id="v-title">الدرس</strong>
+                <i class="fas fa-times" onclick="closeVid()"></i>
+            </div>
+            <video id="player" controls playsinline controlsList="nodownload"></video>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let pendingLesson = null;
+        let completed = JSON.parse(localStorage.getItem('comp_mob_v12') || '[]');
+        let unlocked = JSON.parse(localStorage.getItem('unlk_mob_v12') || '[]');
+
+        function checkLogin() {
+            const user = localStorage.getItem('activeUser');
+            if(user) {
+                currentUser = JSON.parse(user);
+                document.getElementById('auth-page').style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+                document.getElementById('user-welcome').innerText = `أهلاً، ${currentUser.name}`;
+                document.getElementById('p-name').innerText = currentUser.name;
+                document.getElementById('p-email').innerText = currentUser.email;
+                renderLessons(); renderPosts(); updateStats();
+            }
+        }
+
+        function doLogin() {
+            const email = document.getElementById('login-email').value;
+            const users = JSON.parse(localStorage.getItem('codpro_users') || '[{"name":"كريم","email":"admin@cod.com"}]');
+            const user = users.find(u => u.email === email);
+            if(user) { localStorage.setItem('activeUser', JSON.stringify(user)); checkLogin(); }
+            else alert("البريد غير مسجل");
+        }
+
+        function renderLessons() {
+            const lessons = JSON.parse(localStorage.getItem('codpro_lessons') || '[]');
+            const list = document.getElementById('lesson-list');
+            list.innerHTML = lessons.map(l => `
+                <div class="card" onclick="openLesson('${l.id}')" style="display:flex; align-items:center; gap:15px;">
+                    <div style="width:40px; height:40px; background:var(--bg); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--primary);"><i class="fas fa-play"></i></div>
+                    <div style="flex:1"><strong>${l.title}</strong></div>
+                    ${l.type === 'paid' && !unlocked.includes(l.id.toString()) ? '<i class="fas fa-lock" style="color:var(--accent)"></i>' : ''}
+                    ${completed.includes(l.id.toString()) ? '<i class="fas fa-check-circle" style="color:#10b981"></i>' : ''}
+                </div>
+            `).join('');
+        }
+
+        function openLesson(id) {
+            const lessons = JSON.parse(localStorage.getItem('codpro_lessons') || '[]');
+            const lesson = lessons.find(l => l.id.toString() === id.toString());
+            pendingLesson = lesson;
+            document.getElementById('video-overlay').style.display = 'flex';
+            
+            if (lesson.type === 'paid' && !unlocked.includes(id.toString())) {
+                document.getElementById('pay-section').style.display = 'block';
+                document.getElementById('video-section').style.display = 'none';
+            } else {
+                startVid();
+            }
+        }
+
+        function checkLessonCode() {
+            if(document.getElementById('act-code').value === pendingLesson.code) {
+                unlocked.push(pendingLesson.id.toString());
+                localStorage.setItem('unlk_mob_v12', JSON.stringify(unlocked));
+                alert("تم التفعيل!");
+                startVid();
+            } else alert("كود خاطئ!");
+        }
+
+        function startVid() {
+            document.getElementById('pay-section').style.display = 'none';
+            document.getElementById('video-section').style.display = 'block';
+            const p = document.getElementById('player');
+            p.src = pendingLesson.videoData;
+            document.getElementById('v-title').innerText = pendingLesson.title;
+            p.play();
+            if(!completed.includes(pendingLesson.id.toString())) {
+                completed.push(pendingLesson.id.toString());
+                localStorage.setItem('comp_mob_v12', JSON.stringify(completed));
+                updateStats(); renderLessons();
+            }
+        }
+
+        function closeVid() { document.getElementById('player').pause(); document.getElementById('video-overlay').style.display = 'none'; }
+
+        function addPost() {
+            const txt = document.getElementById('post-text').value;
+            if(!txt) return;
+            let posts = JSON.parse(localStorage.getItem('app_posts') || '[]');
+            posts.unshift({ name: currentUser.name, text: txt });
+            localStorage.setItem('app_posts', JSON.stringify(posts));
+            document.getElementById('post-text').value = '';
+            renderPosts();
+        }
+
+        function renderPosts() {
+            const posts = JSON.parse(localStorage.getItem('app_posts') || '[]');
+            document.getElementById('forum-posts').innerHTML = posts.map(p => `
+                <div class="forum-msg"><strong>${p.name}</strong><p style="font-size:14px; opacity:0.8;">${p.text}</p></div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const lessons = JSON.parse(localStorage.getItem('codpro_lessons') || '[]');
+            document.getElementById('st-done').innerText = completed.length;
+            const perc = lessons.length > 0 ? Math.round((completed.length/lessons.length)*100) : 0;
+            document.getElementById('st-prog').innerText = perc + "%";
+        }
+
+        function showTab(btn, id) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        }
+        function logout() { localStorage.removeItem('activeUser'); location.reload(); }
+    </script>
+</body>
+</html>
